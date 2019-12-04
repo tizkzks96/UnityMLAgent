@@ -5,7 +5,7 @@ using MLAgents;
 
 public class SnakeCtrl : Agent
 {
-    private float saveReward = 0;
+    private static float saveReward = 0;
 
     public float speed = 0.5f;
 
@@ -18,7 +18,7 @@ public class SnakeCtrl : Agent
     private Vector2 direction = Vector2.right;
     private Vector3 currentDirection = Vector3.right;
 
-    private static int size = 50;
+    private static int size = 700;
 
     private GameObject[] tails = new GameObject[size];
     private Vector2[] tailsPrePosition = new Vector2[size];
@@ -317,11 +317,11 @@ public class SnakeCtrl : Agent
         {
             isGoal = false;
             
-            AddReward(1f + 0.1f * tailSize);
-            if (saveReward < GetCumulativeReward())
+            AddReward(1f);
+            if (saveReward < tailSize)
             {
-                saveReward = GetCumulativeReward();
-                print("AA : " + saveReward);
+                saveReward = tailSize;
+                print("AA : " + saveReward + " , tailSize : " + tailSize);
 
             }
             //Done();
