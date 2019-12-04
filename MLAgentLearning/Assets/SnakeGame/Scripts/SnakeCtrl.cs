@@ -18,7 +18,7 @@ public class SnakeCtrl : Agent
     private Vector2 direction = Vector2.right;
     private Vector3 currentDirection = Vector3.right;
 
-    private static int size = 700;
+    private static int size = 15;
 
     private GameObject[] tails = new GameObject[size];
     private Vector2[] tailsPrePosition = new Vector2[size];
@@ -171,6 +171,8 @@ public class SnakeCtrl : Agent
     {
         //foodObject.transform.localPosition = new Vector3(Random.Range(-25, 26), Random.Range(-14, 16));
         foodObject.transform.localPosition = new Vector3(Random.Range(-8, 7), Random.Range(-4, 4));
+        //foodObject.transform.localPosition = new Vector3(Random.Range(-15, 20), Random.Range(-10, 13));
+
     }
 
     public void Reset()
@@ -196,7 +198,7 @@ public class SnakeCtrl : Agent
             {
                 tails[i] = Instantiate(tailObject, transform.parent);
                 tails[i].transform.localPosition = new Vector3(100,100, 10);
-                tailsCurrentPosition[i] = new Vector2(100, 100);
+                tailsCurrentPosition[i] = new Vector2(0, 0);
                 //tails[i].SetActive(false);
             }
         }
@@ -205,7 +207,7 @@ public class SnakeCtrl : Agent
             for (int i = 0; i < tails.Length; i++)
             {
                 tails[i].transform.localPosition = new Vector3(100, 100, 10);
-                tailsCurrentPosition[i] = new Vector2(100, 100);
+                tailsCurrentPosition[i] = new Vector2(0, 0);
                 //tails[i].SetActive(false);
             }
         }
@@ -237,7 +239,7 @@ public class SnakeCtrl : Agent
         Reset();
         //moveCoroutine = StartCoroutine(Move());
     }
-
+    Vector2 temp;
     public override void CollectObservations()
     {
         Vector2 distanceToTarget = foodObject.transform.position - transform.position;
@@ -251,10 +253,10 @@ public class SnakeCtrl : Agent
         //for (int i = 0; i < tailSize; i++)
         //    AddVectorObs(tails[i].transform.localPosition);
 
-        //foreach (Vector2 tailPosition in tailsCurrentPosition)
-        //{
-        //    AddVectorObs(tailPosition);
-        //}
+        foreach (Vector2 tailPosition in tailsCurrentPosition)
+        {
+                AddVectorObs(tailPosition);
+        }
     }
     float range = 0.4f;
 
