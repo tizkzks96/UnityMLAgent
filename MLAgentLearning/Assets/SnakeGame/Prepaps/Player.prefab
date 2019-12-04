@@ -100,8 +100,9 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
-  speed: 0.5
-  tailObject: {fileID: 0}
+  speed: 0.01
+  tailObject: {fileID: 1583707246099211914, guid: 93dc5d1bbaf347a41b476f802e9e7a90,
+    type: 3}
   previousPosition: {x: 0, y: 0}
   foodObject: {fileID: 0}
 --- !u!50 &1290385329
@@ -164,12 +165,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 1
+    vectorObservationSize: 8
     numStackedVectorObservations: 1
-    vectorActionSize: 01000000
+    vectorActionSize: 02000000
     vectorActionDescriptions: []
-    vectorActionSpaceType: 0
-  m_Model: {fileID: 11400000, guid: 468c183196f1844f69e125c99dd135a1, type: 3}
+    vectorActionSpaceType: 1
+  m_Model: {fileID: 11400000, guid: 650de9ea546d0ac41844bfa7508c185c, type: 3}
   m_InferenceDevice: 0
-  m_UseHeuristic: 0
-  m_BehaviorName: My Behavior
+  m_UseHeuristic: 1
+  m_BehaviorName: RollerBallBrain
