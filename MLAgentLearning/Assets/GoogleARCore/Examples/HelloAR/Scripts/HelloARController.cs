@@ -36,8 +36,9 @@ namespace GoogleARCore.Examples.HelloAR
     /// </summary>
     public class HelloARController : MonoBehaviour
     {
+        public GameObject planeGenerator;
         private static bool isStart = false;
-
+        private GameObject player;
         /// <summary>
         /// The first-person camera being used to render the passthrough camera image (i.e. AR
         /// background).
@@ -88,7 +89,10 @@ namespace GoogleARCore.Examples.HelloAR
             _UpdateApplicationLifecycle();
 
             if (isStart)
+            {
+                gameObject.transform.eulerAngles = Vector3.zero;
                 return;
+            }
 
             // If the player has not touched the screen, we are done with this update.
             Touch touch;
@@ -159,7 +163,16 @@ namespace GoogleARCore.Examples.HelloAR
 
                     gameObject.transform.eulerAngles = Vector3.zero;
 
+                    gameObject.SetActive(true);
+
+                    player = gameObject;
+
                     isStart = true;
+
+                    for (int i = 0; i < planeGenerator.transform.childCount; i++)
+                    {
+                        planeGenerator.transform.GetChild(i).GetComponent<MeshRenderer>().enabled = false; ;
+                    }
                 }
             }
         }
