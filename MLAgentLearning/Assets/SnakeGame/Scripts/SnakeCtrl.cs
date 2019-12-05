@@ -18,7 +18,7 @@ public class SnakeCtrl : Agent
     private Vector2 direction = Vector2.right;
     private Vector3 currentDirection = Vector3.right;
 
-    private static int size = 15;
+    private static int size = 100;
 
     private GameObject[] tails = new GameObject[size];
     private Vector2[] tailsPrePosition = new Vector2[size];
@@ -30,7 +30,7 @@ public class SnakeCtrl : Agent
 
     private bool isDead = false;
     private bool isGoal = false;
-
+    private bool isTailCrash = false;
 
     public IEnumerator Move()
     {
@@ -150,10 +150,10 @@ public class SnakeCtrl : Agent
 
     public void CheckDie(Collider2D collision)
     {
-        if (collision.CompareTag("wall") || collision.CompareTag("block"))
-        {
+        if (collision.CompareTag("wall"))
             isDead = true;
-        }
+        if (collision.CompareTag("block"))
+            isTailCrash = true;
     }
 
     public void StateGetFood()
@@ -169,8 +169,15 @@ public class SnakeCtrl : Agent
 
     public void ChangeFoodPosition()
     {
-        //foodObject.transform.localPosition = new Vector3(Random.Range(-25, 26), Random.Range(-14, 16));
-        foodObject.transform.localPosition = new Vector3(Random.Range(-8, 7), Random.Range(-4, 4));
+        //1
+        foodObject.transform.localPosition = new Vector3(Random.Range(-25, 26), Random.Range(-14, 16));
+
+        //2
+        //foodObject.transform.localPosition = new Vector3(Random.Range(-8, 7), Random.Range(-4, 4));
+
+        //3
+        //foodObject.transform.localPosition = new Vector3(Random.Range(-2, 1), Random.Range(-1, 1));
+
         //foodObject.transform.localPosition = new Vector3(Random.Range(-15, 20), Random.Range(-10, 13));
 
     }
@@ -188,6 +195,7 @@ public class SnakeCtrl : Agent
 
         isDead = false;
         isGoal = false;
+        isTailCrash = false;
     }
 
     public void InitTails()
@@ -262,6 +270,10 @@ public class SnakeCtrl : Agent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        if (tailSize > size)
+        {
+            Done();
+        }
         AddReward(-0.001f);
 
         Vector2 controlSignal = Vector2.zero;
@@ -332,9 +344,16 @@ public class SnakeCtrl : Agent
         // Fell off platform
         if (isDead)
         {
-            //AddReward(-1f);
+            AddReward(-1f);
             Done();
         }
+
+        if (isTailCrash)
+        {
+            AddReward(-1f);
+            Done();
+        }
+
 
         //if(foodObject.transform.localPosition.x == transform.localPosition.x)
         //{
@@ -345,7 +364,6 @@ public class SnakeCtrl : Agent
         //{
         //    AddReward(0.01f);
         //}
-
     }
 
     public override float[] Heuristic()
