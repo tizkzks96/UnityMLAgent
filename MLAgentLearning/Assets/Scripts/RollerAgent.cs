@@ -89,6 +89,11 @@ public class RollerAgent : Agent
     public float moveSpeed = 8f;
     public Joystick joystick;
 
+    public void ActiveJoystic()
+    {
+        joystick.gameObject.SetActive(true);
+    }
+
     public override float[] Heuristic()
     {
         var action = new float[2];

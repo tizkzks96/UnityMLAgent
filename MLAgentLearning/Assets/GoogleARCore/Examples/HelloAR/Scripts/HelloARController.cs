@@ -36,7 +36,9 @@ namespace GoogleARCore.Examples.HelloAR
     /// </summary>
     public class HelloARController : MonoBehaviour
     {
+        public GameObject joystic;
         public GameObject planeGenerator;
+        public GameObject pointCloud;
         private static bool isStart = false;
         private GameObject player;
         /// <summary>
@@ -90,7 +92,7 @@ namespace GoogleARCore.Examples.HelloAR
 
             if (isStart)
             {
-                gameObject.transform.eulerAngles = Vector3.zero;
+                player.transform.eulerAngles = Vector3.zero;
                 return;
             }
 
@@ -173,6 +175,11 @@ namespace GoogleARCore.Examples.HelloAR
                     {
                         planeGenerator.transform.GetChild(i).GetComponent<MeshRenderer>().enabled = false; ;
                     }
+                    planeGenerator.GetComponent<DetectedPlaneGenerator>().enabled = false;
+
+                    pointCloud.SetActive(false);
+
+                    joystic.SetActive(true);
                 }
             }
         }
